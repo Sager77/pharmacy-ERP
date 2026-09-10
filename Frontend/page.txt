@@ -1,0 +1,104 @@
+  const [page, setPage] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [startIndex, setStartIndex] = useState(0); // Track which group of pages to show
+
+    const itemsPerPage = 3; // Show 3 pages at a time
+
+    function handleClick() {
+        if (currentIndex < page.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+            
+            // If we're at the end of visible pages, move the window forward
+            if (currentIndex + 1 >= startIndex + itemsPerPage) {
+                setStartIndex(startIndex + 1);
+            }
+        }
+    }
+
+    function handlePrevious() {
+        if (currentIndex > 0) {
+            setCurrentIndex(currentIndex - 1);
+            
+            // If we're at the beginning of visible pages, move the window backward
+            if (currentIndex - 1 < startIndex) {
+                setStartIndex(startIndex - 1);
+            }
+        }
+    }
+
+    // Get the visible pages (3 at a time)
+    const visiblePages = page.slice(startIndex, startIndex + itemsPerPage);
+
+    // Check if there are more pages to show
+    const hasMorePages = startIndex + itemsPerPage < page.length;
+    const hasPreviousPages = startIndex > 0;
+
+    function showNextGroup() {
+        if (hasMorePages) {
+            setStartIndex(startIndex + itemsPerPage);
+            setCurrentIndex(startIndex + itemsPerPage);
+        }
+    }
+
+    function showPreviousGroup() {
+        if (hasPreviousPages) {
+            setStartIndex(startIndex - itemsPerPage);
+            setCurrentIndex(startIndex - itemsPerPage);
+        }
+    }
+
+    return (
+        <>
+            <h1>Page: {page[currentIndex]}</h1>
+            <p>Current Index: {currentIndex}</p>
+            <p>Total Pages: {page.length}</p>
+            
+            <div style={{ marginBottom: '10px' }}>
+                <button onClick={handlePrevious} disabled={currentIndex === 0}>
+                    Previous
+                </button>
+                
+                <button onClick={handleClick} disabled={currentIndex === page.length - 1}>
+                    Next
+                </button>
+            </div>
+            
+            {/* Show only 3 pages with navigation arrows */}
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                {/* Previous group arrow */}
+                {hasPreviousPages && (
+                    <button onClick={showPreviousGroup} style={{ padding: '5px 10px' }}>
+                        ◀
+                    </button>
+                )}
+                
+                {/* Visible page numbers (3 at a time) */}
+                {visiblePages.map((num, index) => {
+                    const actualIndex = startIndex + index;
+                    return (
+                        <span 
+                            key={num}
+                            onClick={() => setCurrentIndex(actualIndex)}
+                            style={{
+                                padding: '8px 15px',
+                                backgroundColor: actualIndex === currentIndex ? 'blue' : 'gray',
+                                color: 'white',
+                                borderRadius: '5px',
+                                cursor: 'pointer',
+                                fontWeight: actualIndex === currentIndex ? 'bold' : 'normal'
+                            }}
+                        >
+                            {num}
+                        </span>
+                    );
+                })}
+                
+                {/* Next group arrow */}
+                {hasMorePages && (
+                    <button onClick={showNextGroup} style={{ padding: '5px 10px' }}>
+                        ▶
+                    </button>
+                )}
+            </div>
+        </>
+    );

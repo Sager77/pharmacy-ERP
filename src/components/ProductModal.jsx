@@ -48,6 +48,10 @@ export const ProductModal = ({ product, onClose }) => {
               src={product.image}
               alt={product.name}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80';
+              }}
             />
             <div className="absolute top-4 left-4">
               <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/95 text-pharmacy-700 shadow-sm">

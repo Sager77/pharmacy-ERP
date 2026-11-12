@@ -289,7 +289,7 @@ export const products = [
     details: "Color-coded fever indicator, silent mode for sleeping babies, memory recall for 32 readings.",
     availability: "In Stock",
     prescriptionRequired: false,
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80"
+    image: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&w=600&q=80"
   },
   {
     id: 20,

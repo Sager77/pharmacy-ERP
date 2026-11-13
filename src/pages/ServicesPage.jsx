@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { pharmacyInfo, services, faqs } from '../data/pharmacyData';
 import { 
   PillIcon, 
@@ -14,8 +15,9 @@ import {
   AlertCircleIcon
 } from '../components/Icons';
 
-export const ServicesPage = ({ setActivePage }) => {
+export const ServicesPage = () => {
   const [openFaq, setOpenFaq] = useState(0);
+  const navigate = useNavigate();
 
   const getServiceIcon = (iconName) => {
     switch(iconName) {
@@ -31,7 +33,7 @@ export const ServicesPage = ({ setActivePage }) => {
 
   const handleServiceAction = (action) => {
     if (action === 'contact') {
-      setActivePage('contact');
+      navigate('/contact');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (action === 'call') {
       window.location.href = `tel:${pharmacyInfo.phoneRaw}`;
@@ -41,7 +43,7 @@ export const ServicesPage = ({ setActivePage }) => {
         '_blank'
       );
     } else if (action.startsWith('products')) {
-      setActivePage('products');
+      navigate('/products');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };

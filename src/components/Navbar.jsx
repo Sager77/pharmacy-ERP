@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { pharmacyInfo } from '../data/pharmacyData';
 import { 
   PhoneIcon, 
   WhatsAppIcon, 
   MapPinIcon, 
-  ClockIcon, 
   MenuIcon, 
   XIcon, 
   CrossIcon,
   ChevronRightIcon
 } from './Icons';
 
-export const Navbar = ({ activePage, setActivePage }) => {
+export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navLinks = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About Us' },
-    { id: 'products', label: 'Products' },
-    { id: 'services', label: 'Services' },
-    { id: 'contact', label: 'Contact Us' },
+    { to: '/',         label: 'Home' },
+    { to: '/about',    label: 'About Us' },
+    { to: '/products', label: 'Products' },
+    { to: '/services', label: 'Services' },
+    { to: '/contact',  label: 'Contact Us' },
   ];
 
-  const handleNavClick = (pageId) => {
-    setActivePage(pageId);
+  const handleLogoClick = () => {
+    navigate('/');
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -73,7 +74,7 @@ export const Navbar = ({ activePage, setActivePage }) => {
         <div className="flex justify-between items-center h-20">
           {/* Logo & Brand */}
           <button 
-            onClick={() => handleNavClick('home')}
+            onClick={handleLogoClick}
             className="flex items-center gap-3 text-left group focus:outline-none"
           >
             <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-pharmacy-600 to-pharmacy-500 text-white flex items-center justify-center shadow-md shadow-pharmacy-500/20 group-hover:scale-105 transition-transform">
@@ -96,22 +97,23 @@ export const Navbar = ({ activePage, setActivePage }) => {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-1 lg:gap-2">
-            {navLinks.map((link) => {
-              const isActive = activePage === link.id;
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => handleNavClick(link.id)}
-                  className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.to === '/'}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className={({ isActive }) =>
+                  `px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
                     isActive
                       ? 'text-pharmacy-600 bg-pharmacy-50 font-bold'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
-                >
-                  {link.label}
-                </button>
-              );
-            })}
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
           </nav>
 
           {/* Quick Actions (Call & WhatsApp) */}
@@ -159,23 +161,31 @@ export const Navbar = ({ activePage, setActivePage }) => {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-slate-100 bg-white px-4 pt-3 pb-6 shadow-xl animate-fadeIn">
           <div className="space-y-1">
-            {navLinks.map((link) => {
-              const isActive = activePage === link.id;
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => handleNavClick(link.id)}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-colors ${
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.to === '/'}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={({ isActive }) =>
+                  `w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-colors ${
                     isActive
                       ? 'bg-pharmacy-50 text-pharmacy-700 font-bold'
                       : 'text-slate-700 hover:bg-slate-50'
-                  }`}
-                >
-                  <span>{link.label}</span>
-                  <ChevronRightIcon className={`w-4 h-4 ${isActive ? 'text-pharmacy-600' : 'text-slate-400'}`} />
-                </button>
-              );
-            })}
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <span>{link.label}</span>
+                    <ChevronRightIcon className={`w-4 h-4 ${isActive ? 'text-pharmacy-600' : 'text-slate-400'}`} />
+                  </>
+                )}
+              </NavLink>
+            ))}
           </div>
 
           <div className="mt-4 pt-4 border-t border-slate-100 grid grid-cols-2 gap-3">

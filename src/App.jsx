@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ProductModal } from './components/ProductModal';
@@ -11,48 +12,24 @@ import { pharmacyInfo } from './data/pharmacyData';
 import { WhatsAppIcon, PhoneIcon } from './components/Icons';
 
 export function App() {
-  const [activePage, setActivePage] = useState('home');
   const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const renderActivePage = () => {
-    switch (activePage) {
-      case 'home':
-        return (
-          <HomePage
-            setActivePage={setActivePage}
-            onSelectProduct={(product) => setSelectedProduct(product)}
-          />
-        );
-      case 'about':
-        return <AboutPage setActivePage={setActivePage} />;
-      case 'products':
-        return (
-          <ProductsPage
-            onSelectProduct={(product) => setSelectedProduct(product)}
-          />
-        );
-      case 'services':
-        return <ServicesPage setActivePage={setActivePage} />;
-      case 'contact':
-        return <ContactPage />;
-      default:
-        return (
-          <HomePage
-            setActivePage={setActivePage}
-            onSelectProduct={(product) => setSelectedProduct(product)}
-          />
-        );
-    }
-  };
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans text-slate-900 selection:bg-pharmacy-500 selection:text-white relative">
       {/* Top Navbar */}
-      <Navbar activePage={activePage} setActivePage={setActivePage} />
+      <Navbar />
 
       {/* Main Page Body */}
       <main className="flex-1">
-        {renderActivePage()}
+        <Routes>
+          <Route path="/" element={<HomePage onSelectProduct={(product) => setSelectedProduct(product)} />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/products" element={<ProductsPage onSelectProduct={(product) => setSelectedProduct(product)} />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          {/* Catch-all redirect to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
 
       {/* Global Product Modal */}
@@ -88,7 +65,7 @@ export function App() {
       </div>
 
       {/* Global Footer */}
-      <Footer setActivePage={setActivePage} />
+      <Footer />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { pharmacyInfo, categories } from '../data/pharmacyData';
 import { 
   PhoneIcon, 
@@ -10,9 +11,11 @@ import {
   ChevronRightIcon
 } from './Icons';
 
-export const Footer = ({ setActivePage }) => {
-  const handleNavClick = (pageId) => {
-    setActivePage(pageId);
+export const Footer = () => {
+  const navigate = useNavigate();
+
+  const handleNavClick = (to) => {
+    navigate(to);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -52,15 +55,15 @@ export const Footer = ({ setActivePage }) => {
             </h3>
             <ul className="space-y-2.5 text-sm">
               {[
-                { id: 'home', label: 'Home Page' },
-                { id: 'about', label: 'About AZ Pharmacy' },
-                { id: 'products', label: 'Explore Products' },
-                { id: 'services', label: 'Our Services' },
-                { id: 'contact', label: 'Contact & Location' }
+                { to: '/',         label: 'Home Page' },
+                { to: '/about',    label: 'About AZ Pharmacy' },
+                { to: '/products', label: 'Explore Products' },
+                { to: '/services', label: 'Our Services' },
+                { to: '/contact',  label: 'Contact & Location' }
               ].map((link) => (
-                <li key={link.id}>
+                <li key={link.to}>
                   <button
-                    onClick={() => handleNavClick(link.id)}
+                    onClick={() => handleNavClick(link.to)}
                     className="group inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
                   >
                     <ChevronRightIcon className="w-3.5 h-3.5 text-slate-600 group-hover:text-pharmacy-400 transition-colors" />
@@ -80,7 +83,7 @@ export const Footer = ({ setActivePage }) => {
               {categories.slice(1, 7).map((cat) => (
                 <li key={cat.id}>
                   <button
-                    onClick={() => handleNavClick('products')}
+                    onClick={() => handleNavClick('/products')}
                     className="group inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
                   >
                     <ChevronRightIcon className="w-3.5 h-3.5 text-slate-600 group-hover:text-emerald-400 transition-colors" />
@@ -138,7 +141,7 @@ export const Footer = ({ setActivePage }) => {
           </div>
         </div>
 
-        {/* Informational Disclaimer as emphasized in README & design-guide */}
+        {/* Informational Disclaimer */}
         <div className="py-6 border-b border-slate-800 text-xs text-slate-400 leading-relaxed">
           <p>
             <strong className="text-slate-300">Important Medical Disclaimer:</strong> AZ Pharmacy is a licensed local pharmacy. This website is for informational purposes only. The information provided is not intended to diagnose, treat, cure, or prevent any medical condition and does not substitute professional medical advice from a doctor or qualified healthcare professional. Prescription medications require a valid, verified prescription from an authorized practitioner before dispensing.
@@ -149,15 +152,15 @@ export const Footer = ({ setActivePage }) => {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p>© {new Date().getFullYear()} AZ Pharmacy. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <button onClick={() => handleNavClick('about')} className="hover:text-white transition-colors">
+            <button onClick={() => handleNavClick('/about')} className="hover:text-white transition-colors">
               Privacy Policy
             </button>
             <span>•</span>
-            <button onClick={() => handleNavClick('services')} className="hover:text-white transition-colors">
+            <button onClick={() => handleNavClick('/services')} className="hover:text-white transition-colors">
               Terms of Service
             </button>
             <span>•</span>
-            <button onClick={() => handleNavClick('contact')} className="hover:text-white transition-colors">
+            <button onClick={() => handleNavClick('/contact')} className="hover:text-white transition-colors">
               Store Directions
             </button>
           </div>

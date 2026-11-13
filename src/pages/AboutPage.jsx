@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { pharmacyInfo, values } from '../data/pharmacyData';
 import { 
   HeartPulseIcon, 
@@ -12,7 +13,8 @@ import {
   ArrowRightIcon
 } from '../components/Icons';
 
-export const AboutPage = ({ setActivePage }) => {
+export const AboutPage = () => {
+  const navigate = useNavigate();
   const getValueIcon = (iconName) => {
     switch(iconName) {
       case 'HeartPulseIcon': return <HeartPulseIcon className="w-6 h-6 text-emerald-600" />;
@@ -105,7 +107,7 @@ export const AboutPage = ({ setActivePage }) => {
 
             <div className="pt-2 border-t border-slate-100">
               <button
-                onClick={() => setActivePage('contact')}
+                onClick={() => navigate('/contact')}
                 className="w-full py-3 px-4 rounded-xl text-sm font-bold text-white bg-pharmacy-600 hover:bg-pharmacy-700 transition-colors flex items-center justify-center gap-2"
               >
                 <span>Get in Touch With Us</span>
@@ -183,7 +185,7 @@ export const AboutPage = ({ setActivePage }) => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-end">
               <button
-                onClick={() => setActivePage('contact')}
+                onClick={() => navigate('/contact')}
                 className="py-3.5 px-6 rounded-xl font-bold text-white bg-pharmacy-600 hover:bg-pharmacy-700 transition-colors shadow-md"
               >
                 Directions & Contact Form

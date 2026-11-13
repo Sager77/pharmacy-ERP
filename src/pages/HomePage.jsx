@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { pharmacyInfo, categories, products, services, values } from '../data/pharmacyData';
 import { ProductCard } from '../components/ProductCard';
 import { 
@@ -19,7 +20,8 @@ import {
   CheckCircleIcon
 } from '../components/Icons';
 
-export const HomePage = ({ setActivePage, onSelectProduct }) => {
+export const HomePage = ({ onSelectProduct }) => {
+  const navigate = useNavigate();
   // Select top 4 featured products for homepage preview
   const featuredProducts = products.filter(p => [1, 5, 9, 18].includes(p.id));
 
@@ -65,7 +67,7 @@ export const HomePage = ({ setActivePage, onSelectProduct }) => {
               {/* Primary Action Buttons */}
               <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4">
                 <button
-                  onClick={() => setActivePage('products')}
+                  onClick={() => navigate('/products')}
                   className="px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold text-white bg-pharmacy-600 hover:bg-pharmacy-700 shadow-lg shadow-pharmacy-600/25 transition-all hover:-translate-y-0.5 flex items-center gap-2"
                 >
                   <span>Explore Our Products</span>
@@ -73,7 +75,7 @@ export const HomePage = ({ setActivePage, onSelectProduct }) => {
                 </button>
 
                 <button
-                  onClick={() => setActivePage('contact')}
+                  onClick={() => navigate('/contact')}
                   className="px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 shadow-sm transition-all hover:-translate-y-0.5"
                 >
                   Contact Us
@@ -254,7 +256,7 @@ export const HomePage = ({ setActivePage, onSelectProduct }) => {
               
               <div className="pt-2">
                 <button
-                  onClick={() => setActivePage('about')}
+                  onClick={() => navigate('/about')}
                   className="px-5 py-3 rounded-xl text-sm font-bold text-slate-900 bg-white hover:bg-slate-100 transition-all flex items-center gap-2"
                 >
                   <span>Learn More About Us</span>
@@ -306,7 +308,7 @@ export const HomePage = ({ setActivePage, onSelectProduct }) => {
           </div>
 
           <button
-            onClick={() => setActivePage('products')}
+            onClick={() => navigate('/products')}
             className="inline-flex items-center gap-2 text-sm font-bold text-pharmacy-600 hover:text-pharmacy-700 transition-colors"
           >
             <span>View All Products</span>
@@ -319,7 +321,7 @@ export const HomePage = ({ setActivePage, onSelectProduct }) => {
           {categories.slice(1, 7).map((cat) => (
             <div
               key={cat.id}
-              onClick={() => setActivePage('products')}
+              onClick={() => navigate('/products')}
               className="bg-white p-5 rounded-2xl border border-slate-200/80 hover:border-pharmacy-300 pharmacy-card-shadow transition-all duration-200 cursor-pointer group text-center flex flex-col items-center justify-center space-y-3"
             >
               <div className="w-12 h-12 rounded-xl bg-slate-50 group-hover:bg-pharmacy-50 flex items-center justify-center transition-colors">
@@ -384,7 +386,7 @@ export const HomePage = ({ setActivePage, onSelectProduct }) => {
 
                 <div className="pt-2 border-t border-slate-100">
                   <button
-                    onClick={() => setActivePage('services')}
+                    onClick={() => navigate('/services')}
                     className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pharmacy-600 hover:text-pharmacy-700 transition-colors"
                   >
                     <span>Read Details</span>
@@ -397,7 +399,7 @@ export const HomePage = ({ setActivePage, onSelectProduct }) => {
 
           <div className="text-center pt-2">
             <button
-              onClick={() => setActivePage('services')}
+              onClick={() => navigate('/services')}
               className="px-6 py-3 rounded-xl text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 transition-all inline-flex items-center gap-2"
             >
               <span>Explore All Available Services</span>
@@ -511,7 +513,7 @@ export const HomePage = ({ setActivePage, onSelectProduct }) => {
               </a>
 
               <button
-                onClick={() => setActivePage('contact')}
+                onClick={() => navigate('/contact')}
                 className="w-full py-3.5 px-6 rounded-xl font-bold text-center text-teal-100 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all"
               >
                 Find Us on Map
